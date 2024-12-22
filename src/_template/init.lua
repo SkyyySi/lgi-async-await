@@ -3,6 +3,7 @@
 --------------------------------------------------------------------------------
 
 --- Global variable caches go here
+local require = require
 
 --- Imports / `require()`s go here
 local utils = require("utils")

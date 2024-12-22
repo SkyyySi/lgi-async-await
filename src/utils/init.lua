@@ -2,6 +2,7 @@
 
 --------------------------------------------------------------------------------
 
+local require      = require
 local getmetatable = getmetatable
 local setmetatable = setmetatable
 local error        = error

@@ -2,6 +2,8 @@
 
 --------------------------------------------------------------------------------
 
+local require = require
+
 local lgi = require("lgi")
 
 local GLib = lgi.GLib
@@ -12,6 +14,9 @@ local g_idle_add = GLib.idle_add
 
 local utils   = require("utils")
 local promise = require("promise")
+
+local pack   = utils.pack
+local unpack = utils.unpack
 
 local Promise = promise.Promise
 
@@ -44,16 +49,19 @@ end
 ---@return (fun(...: T_Params): lgi-async-await.promise.Promise) -- lgi-async-await.promise.Promise<T_Return>
 function _M.async(func)
 	return function(...)
-		local argv, argc = utils.pack(...)
+		local argv, argc = pack(...)
 
-		local thread = coroutine.create(function(fulfill, reject)
+		---@type lgi-async-await.promise.ResolverFunction<unknown> -- <T_Return>
+		local thread_func = function(fulfill, reject)
 			xpcall(function()
-				local result = func(utils.unpack(argv, 1, argc))
+				local result = func(unpack(argv, 1, argc))
 				fulfill(result)
 			end, function(reason)
 				reject(debug_traceback(reason))
 			end)
-		end)
+		end
+
+		local thread = co_create(thread_func)
 
 		return Promise(function(fulfill, reject)
 			co_resume(thread, fulfill, reject)
