@@ -2,15 +2,27 @@
 
 --------------------------------------------------------------------------------
 
----@class lgi-async-await : lgi-async-await.Module
+--- Global variable caches go here
+
+--- Imports / `require()`s go here
+
+--------------------------------------------------------------------------------
+
+---@class lgi-async-await._template : lgi-async-await.Module
 local _M = {
-	__name    = "lgi-async-await",
+	__name    = "lgi-async-await._template",
 	__package = (... or "__main__"),
 }
 
 --------------------------------------------------------------------------------
 
--- ...
+-- Functions, classes, etc. go here
+
+--------------------------------------------------------------------------------
+
+function _M.new()
+	return -- ...
+end
 
 --------------------------------------------------------------------------------
 
