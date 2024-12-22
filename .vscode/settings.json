@@ -1,0 +1,18 @@
+{
+	"Lua.runtime.path": [
+		"./src/?.lua",
+		"./src/?/init.lua",
+		"/usr/share/lua/5.1/?.lua",
+		"/usr/share/lua/5.1/?/init.lua",
+		"/usr/share/lua/5.2/?.lua",
+		"/usr/share/lua/5.2/?/init.lua",
+		"/usr/share/lua/5.3/?.lua",
+		"/usr/share/lua/5.3/?/init.lua",
+		"/usr/local/share/lua/5.1/?.lua",
+		"/usr/local/share/lua/5.1/?/init.lua",
+		"/usr/local/share/lua/5.2/?.lua",
+		"/usr/local/share/lua/5.2/?/init.lua",
+		"/usr/local/share/lua/5.3/?.lua",
+		"/usr/local/share/lua/5.3/?/init.lua",
+	]
+}

@@ -5,14 +5,12 @@
 --- Global variable caches go here
 
 --- Imports / `require()`s go here
+local utils = require("utils")
 
 --------------------------------------------------------------------------------
 
----@class lgi-async-await._template : lgi-async-await.Module
-local _M = {
-	__name    = "lgi-async-await._template",
-	__package = (... or "__main__"),
-}
+---@class lgi-async-await._template : lgi-async-await.utils.Module
+local _M = utils.create_module("_template", ...)
 
 --------------------------------------------------------------------------------
 
@@ -32,10 +30,6 @@ function _M.main(args)
 	return 0
 end
 
-if _M.__package == "__main__" then
-	os.exit(_M.main(arg or {}))
-end
-
 --------------------------------------------------------------------------------
 
-return _M
+return _M:finalize()

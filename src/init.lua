@@ -2,15 +2,19 @@
 
 --------------------------------------------------------------------------------
 
----@class lgi-async-await : lgi-async-await.Module
-local _M = {
-	__name    = "lgi-async-await",
-	__package = (... or "__main__"),
-}
+local utils = require("utils")
 
 --------------------------------------------------------------------------------
 
--- ...
+---@class lgi-async-await : lgi-async-await.utils.Module
+local _M = utils.create_module("", ...)
+
+--------------------------------------------------------------------------------
+
+_M.async_await = require("async_await")
+_M.io          = require("io")
+_M.promise     = require("promise")
+_M.utils       = utils
 
 --------------------------------------------------------------------------------
 
@@ -18,10 +22,6 @@ function _M.main(args)
 	-- ...
 
 	return 0
-end
-
-if _M.__package == "__main__" then
-	os.exit(_M.main(arg or {}))
 end
 
 --------------------------------------------------------------------------------
