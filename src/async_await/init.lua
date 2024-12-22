@@ -4,8 +4,7 @@
 
 local require = require
 
-local lgi = require("lgi")
-
+local lgi  = require("lgi")
 local GLib = lgi.GLib
 
 --- See <https://docs.gtk.org/glib/func.idle_add_full.html> for more details
@@ -13,12 +12,10 @@ local GLib = lgi.GLib
 local g_idle_add = GLib.idle_add
 
 local utils   = require("utils")
-local promise = require("promise")
+local Promise = require("promise").Promise
 
 local pack   = utils.pack
 local unpack = utils.unpack
-
-local Promise = promise.Promise
 
 local coroutine = coroutine
 local debug     = debug
@@ -83,7 +80,7 @@ function _M.await(promise)
 
 		promise:on_fulfilled(function(result)
 			has_resolved = true
-		end):on_rejecteded(function(result)
+		end):on_rejected(function(result)
 			has_resolved = true
 		end)
 	end
@@ -92,7 +89,7 @@ function _M.await(promise)
 		add_callback_to_queue(function()
 			co_resume(current_coroutine, result)
 		end)
-	end):on_rejecteded(function(reason)
+	end):on_rejected(function(reason)
 		local message = (
 			"Error in 'await()'-call: " ..
 			tostring(reason) ..

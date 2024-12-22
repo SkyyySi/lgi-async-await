@@ -40,7 +40,11 @@ end
 ---@param ...            any
 ---@return lgi-async-await.MaybeError<T>
 function _M.assert(value, message_format, ...)
-	return assert(value, format("\x1b[1;41m Assertion failed \x1b[0m " .. message_format, ...))
+	if value then
+		return value
+	end
+
+	return _M.error(message_format, ...)
 end
 
 --- A helper function to check whether the type of a given parameter is correct,
@@ -175,9 +179,25 @@ end
 ---@param func_make_class (fun(class: T): lgi-async-await.NoReturn)
 ---@return T | any class
 function _M.create_class(name, func_make_class)
+	_M.assert(_M.check_parameter_type(
+		"utils.create_class",
+		"string",
+		"name",
+		1,
+		name
+	))
+
+	_M.assert(_M.check_parameter_type(
+		"utils.create_class",
+		"function",
+		"func_make_class",
+		2,
+		func_make_class
+	))
+
 	---@class lgi-async-await.utils.Class : lgi-async-await.utils.ClassMeta
 	local class = {
-		__name = (_M.module_namespace_prefix .. "." .. name),
+		__name = name,
 	}
 
 	class.__class = class
@@ -215,8 +235,10 @@ function _M.create_class(name, func_make_class)
 
 	---@param cls lgi-async-await.utils.Class
 	function meta.__call(cls, ...)
-		local self cls.__new(cls, ...)
+		local self = cls.__new(cls, ...)
+
 		cls.__init(self, ...)
+
 		return self
 	end
 
